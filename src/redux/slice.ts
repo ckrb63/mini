@@ -27,11 +27,13 @@ const initialState = {
   ],
   users: [
     {
+      name: "김찬규",
       id: "cksr1@naver.com",
       pw: "qwer1234"
     }
   ],
   currentId: 3
+  // isSignIn: false,
 };
 
 const slice = createSlice({
@@ -52,8 +54,30 @@ const slice = createSlice({
           }
         ],
         currentId: state.currentId + 1
+        // isSignIn: state.isSignIn
+      };
+    },
+    signup(state, action) {
+      return {
+        ...state,
+        users: [
+          ...state.users,
+          {
+            name: action.payload.name,
+            id: action.payload.id,
+            pw: action.payload.pw
+          }
+        ]
       };
     }
+    // login(state, action) {
+    //   const user = state.users.find(
+    //     (user) => user.id === action.payload.email
+    //   );
+    //   if(user && action.payload.password === user.pw){
+    //     state.isSignIn = true;
+    //   }
+    // }
   }
 });
 
