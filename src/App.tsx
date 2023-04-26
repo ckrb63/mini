@@ -5,6 +5,7 @@ import Login from "./page/Login";
 import FeedPage from './page/FeedPage';
 import PostPage from './page/PostPage';
 import SignUp from './page/SignUp';
+import FeedDetail from './page/FeedDetail';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/detail" element={<FeedDetail />} />
         <Route path="/post" element={<PostPage />} />
       </Routes>
     </BrowserRouter>

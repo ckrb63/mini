@@ -4,14 +4,16 @@ import Mail from "../icon/mail.svg";
 import Lock from "../icon/lock.svg";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { sliceActions } from "../redux/slice";
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fail, setFail] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const emailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -26,6 +28,7 @@ function Login() {
   const login = () => {
     const user = users.find((user) => user.id === email);
     if (user && user.pw === password) {
+      dispatch(sliceActions.login({ name: user.name }));
       navigate('/feed');
     } else {
       setFail(true);

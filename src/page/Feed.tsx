@@ -5,6 +5,9 @@ import Comment from "../icon/comment.svg";
 import Heart from "../icon/heart.svg";
 import Empty from "../icon/star-empty.svg";
 import "./Feed.scss";
+import { useDispatch } from "react-redux";
+import { sliceActions } from "../redux/slice";
+import { useNavigate } from "react-router-dom";
 
 interface FeedProp {
   feedId: number;
@@ -19,6 +22,9 @@ interface FeedProp {
 
 function Feed({ feedId, title, reader, bookImg, content, rating, comment, heart }: FeedProp) {
   let stars;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const feed = { feedId, title, reader, bookImg, content, rating, comment, heart };
   if (rating === 5) {
     stars = <div className="stars">
       <img src={Star} alt="star" />
@@ -60,7 +66,13 @@ function Feed({ feedId, title, reader, bookImg, content, rating, comment, heart 
       <img src={Empty} alt="star" />
     </div>
   }
-  return <div className="feed">
+
+  const feedClickHandler = () => {
+    dispatch(sliceActions.setCurrentPost(feed));
+    navigate('/feed/detail');
+  };
+
+  return <div className="feed" onClick={feedClickHandler}>
     <img className="feed-img" src={bookImg} alt="feed-img" />
     <div className="feed-info">
       <div className="feed-info-header">

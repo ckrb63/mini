@@ -2,6 +2,12 @@ import React, { useMemo, useState } from "react";
 import Star from "../icon/star.svg";
 import Empty from "../icon/star-empty.svg";
 import { books } from "./books";
+import Save from "../icon/save.svg";
+import "./PostPage.scss";
+import Back from "./Back";
+import { useDispatch, useSelector } from "react-redux";
+import { sliceActions } from "../redux/slice";
+import { RootState } from "../redux/store";
 
 interface book {
   title: string;
@@ -11,17 +17,29 @@ interface book {
 function PostPage() {
   const [rating, setRating] = useState(0);
   const [entered, setEntered] = useState('');
+  const [content, setContent] = useState('');
   const [image, setImage] = useState('');
   const [option, setOption] = useState<book[]>([]);
 
+  const dispatch = useDispatch();
+  const userName = useSelector((state: RootState) => state.name);
+
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEntered(e.target.value);
+    setImage('');
+
     if (e.target.value.length > 1) {
       const autoComplete = books.filter((book) => {
         return book.title.includes(e.target.value);
       });
       setOption(autoComplete);
+    } else {
+      setOption([]);
     }
+  };
+
+  const contentChangeHander = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
   };
 
   const autoCompleteContext = option.map((book) => {
@@ -30,12 +48,23 @@ function PostPage() {
       setEntered(book.title);
       setImage(book.img);
     };
-    return <div className="post-title-auto" aria-hidden onClick={onClickHandler}>
+    return <div className="post-title-auto-item" aria-hidden onClick={onClickHandler}>
       {book.title}
     </div>
   })
 
-  console.log(autoCompleteContext);
+  const savePostHandler = () => {
+    dispatch(sliceActions.postReview({
+      title: entered,
+      reader: userName,
+      content,
+      rating,
+      comment: 0,
+      heart: 0,
+      img: image,
+    }))
+  };
+
 
   const stars = useMemo(() => {
     return <div className="post-stars">
@@ -48,12 +77,14 @@ function PostPage() {
   }, [rating]);
 
   return <div className="post">
+    <Back />
     <div className="post-title">글쓰기</div>
-    <img className="post-save" src="" alt="save" />
+    <img className="post-save" src={Save} alt="save" onClick={savePostHandler} />
+    {image.length > 0 && <img className="post-book-cover" src={image} alt="book-cover" />}
     {stars}
-    <input placeholder="책 이름" onChange={inputChangeHandler} />
-    {option.length > 0 && entered.length > 0 && autoCompleteContext}
-    <input placeholder="내용을 입력하세요" />
+    <input value={entered} className="post-book-title" placeholder="책 이름" onChange={inputChangeHandler} />
+    {option.length > 0 && entered.length > 0 && <div className="post-title-auto">{autoCompleteContext}</div>}
+    <textarea value={content} onChange={contentChangeHander} className="post-book-content" placeholder="내용을 입력하세요" />
   </div>
 };
 

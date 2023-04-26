@@ -5,8 +5,10 @@ import Feed from "./Feed";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import "./FeedPage.scss";
+import { useNavigate } from "react-router-dom";
 
 function FeedPage() {
+  const navigate = useNavigate();
   const reviews = useSelector((state: RootState) => state.feeds);
   const feeds = reviews.map((r) => {
     return <Feed
@@ -25,7 +27,7 @@ function FeedPage() {
         <img src={Logo} alt="logo" />
         <div className="feedpage-header-logo-title">개서리</div>
       </div>
-      <img className="feedpage-header-pencil" src={Pencil} alt="pencil" />
+      <img className="feedpage-header-pencil" src={Pencil} alt="pencil" onClick={() => navigate('/post')} />
     </div>
     {feeds}
   </div>

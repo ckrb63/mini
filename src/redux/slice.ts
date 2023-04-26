@@ -32,7 +32,18 @@ const initialState = {
       pw: "qwer1234"
     }
   ],
-  currentId: 3
+  currentId: 3,
+  name: "",
+  currentPost: {
+    id: 0,
+    title: "",
+    reader: "",
+    content: "",
+    rating: 0,
+    comment: 0,
+    heart: 0,
+    bookImg: ""
+  }
   // isSignIn: false,
 };
 
@@ -53,7 +64,9 @@ const slice = createSlice({
             id: state.currentId
           }
         ],
-        currentId: state.currentId + 1
+        currentId: state.currentId + 1,
+        name: state.name,
+        currentPost: state.currentPost
         // isSignIn: state.isSignIn
       };
     },
@@ -69,6 +82,12 @@ const slice = createSlice({
           }
         ]
       };
+    },
+    login(state, action) {
+      state.name = action.payload.name;
+    },
+    setCurrentPost(state, action) {
+      state.currentPost = action.payload;
     }
     // login(state, action) {
     //   const user = state.users.find(

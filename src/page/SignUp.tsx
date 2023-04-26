@@ -6,10 +6,11 @@ import Human from "../icon/human.svg";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.scss";
 import { sliceActions } from "../redux/slice";
+import { useDispatch } from "react-redux";
 
 function SignUp() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,8 +28,10 @@ function SignUp() {
   };
 
   const signup = () => {
+    console.log(1);
     if (email.length > 0 && name.length > 0 && password.length > 0) {
-      sliceActions.signup({ id: email, name, pw: password });
+      console.log(2);
+      dispatch(sliceActions.signup({ id: email, name, pw: password }));
       navigate('/feed');
     }
   };
