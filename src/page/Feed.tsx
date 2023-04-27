@@ -9,6 +9,11 @@ import { useDispatch } from "react-redux";
 import { sliceActions } from "../redux/slice";
 import { useNavigate } from "react-router-dom";
 
+interface commentType {
+  name: string;
+  comment: string;
+}
+
 interface FeedProp {
   feedId: number;
   title: string;
@@ -16,7 +21,7 @@ interface FeedProp {
   bookImg: string;
   content: string;
   rating: number;
-  comment: number;
+  comment: commentType[];
   heart: number;
 }
 
@@ -24,7 +29,7 @@ function Feed({ feedId, title, reader, bookImg, content, rating, comment, heart 
   let stars;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const feed = { feedId, title, reader, bookImg, content, rating, comment, heart };
+  const feed = { id: feedId, title, reader, bookImg, content, rating, comment, heart };
   if (rating === 5) {
     stars = <div className="stars">
       <img src={Star} alt="star" />
@@ -82,14 +87,13 @@ function Feed({ feedId, title, reader, bookImg, content, rating, comment, heart 
           </div>
           <span>읽은이 : {reader}</span>
         </div>
-        <img src={Exit} alt="x" />
       </div>
       <p>{content}</p>
       <div className="feed-info-rating">
         {stars}
         <div className="feed-info-rating-icon">
           <img className="feed-info-rating-comment" src={Comment} alt="comment" />
-          {comment}
+          {comment.length}
           <img className="feed-info-rating-heart" src={Heart} alt="heart" />
           {heart}
         </div>

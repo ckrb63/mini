@@ -38,7 +38,9 @@ function Login() {
   return <div className="login">
     <div className="login-logo">
       <img className="login-logo-img" src={Logo} alt="logo" />
-      <div className="login-logo-text">개서리</div>
+      <div className="login-logo-text">개서리
+        <div className="login-logo-text-small">개발 서적 리뷰</div>
+      </div>
     </div>
     <div className="login-input">
       <img className="login-input-img" src={Mail} alt="mail" />
