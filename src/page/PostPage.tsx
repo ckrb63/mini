@@ -8,6 +8,7 @@ import Back from "./Back";
 import { useDispatch, useSelector } from "react-redux";
 import { sliceActions } from "../redux/slice";
 import { RootState } from "../redux/store";
+import { useNavigate } from "react-router-dom";
 
 interface book {
   title: string;
@@ -21,6 +22,7 @@ function PostPage() {
   const [image, setImage] = useState('');
   const [option, setOption] = useState<book[]>([]);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userName = useSelector((state: RootState) => state.name);
 
@@ -59,10 +61,11 @@ function PostPage() {
       reader: userName,
       content,
       rating,
-      comment: 0,
+      comment: [],
       heart: 0,
       img: image,
-    }))
+    }));
+    navigate('/feed');
   };
 
 

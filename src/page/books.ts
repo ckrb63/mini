@@ -8,7 +8,7 @@ export const books = [
     img: "https://contents.kyobobook.co.kr/sih/fit-in/300x0/pdt/9791191905274.jpg"
   },
   {
-    title: "모던 자바스크립트 Depp Dive",
+    title: "모던 자바스크립트 Deep Dive",
     img: "https://contents.kyobobook.co.kr/sih/fit-in/300x0/pdt/9791158392239.jpg"
   },
   {
